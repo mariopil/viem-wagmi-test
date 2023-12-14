@@ -103,10 +103,10 @@ export function Profile({ config }: any) {
       <div>
         Connected to {address} 
         <button onClick={() => disconnect()}>Disconnect</button><br/>
-        <button onClick={() => writeEip712T()}>Set greeting</button>
-        <button onClick={() => sendEip712T()}>Send transaction</button>
-        <button onClick={readGreet}>Read greet</button>
         <input type="text" value={customGreet} onChange={e => setCustomGreet(e.target.value)}/>
+        <button onClick={() => writeEip712T()}>Set greeting</button>
+        <button onClick={readGreet}>Read greet</button>
+        <button onClick={() => sendEip712T()}>Send transaction</button>
         {greet && (
           <>
             <div>
