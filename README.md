@@ -34,7 +34,7 @@ const sendEip712T = async() => {
 
 1. Ensure you have `bun` and `pnpm` installed.
 
-2. Download `eip712_signer` branch from https://github.com/eigerco/viem.
+2. Download `eip712` branch from https://github.com/eigerco/viem.
 
 3. Go to `viem` directory and modify `package.json` files:
 
