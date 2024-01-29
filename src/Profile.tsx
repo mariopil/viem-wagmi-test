@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useAccount, useConnect, useDisconnect, useConnectorClient } from 'wagmi'
 import { zkSyncTestnet } from "viem_zksync_chains"
-import { eip712Actions } from 'viem_zksync_chains/zksync'
-import { simulateContract } from '@wagmi/core';
+import { simulateContract } from "viem_zksync/src/actions"
+import { eip712WalletActions } from 'viem_zksync_chains/zksync'
 import { readContract } from '@wagmi/core';
 import {
   stringify,
@@ -56,7 +56,6 @@ export function Profile({ config }: any) {
   const sendEip712T = async() => {
     const request = {
       chainId: defChain.id,
-      chain: defChain,
       account: address,
       to: '0x36615Cf349d7F6344891B1e7CA7C72883F5dc049',
       maxFeePerGas: 250000000n,
@@ -64,14 +63,15 @@ export function Profile({ config }: any) {
       value: 100000,
       ...paymasterParams
     }
-    const client = walletClient?.extend(eip712Actions);
+    const client = walletClient?.extend(eip712WalletActions());
     const hash = await client.sendTransaction(request)
     console.log(hash)
   }
-
+  
   const writeEip712T = async() => {
-
-    const {request} = await simulateContract(config, {
+    
+    const client = walletClient?.extend(eip712WalletActions());
+    const {request} = await simulateContract(client, {
       ...greeterContract,
       functionName: "setGreeting",
       args: [customGreet],
@@ -82,8 +82,7 @@ export function Profile({ config }: any) {
       account: address,
     })
 
-    const client = walletClient?.extend(eip712Actions);
-    const hash = await client.writeContract(request)//walletClient.writeContract(request);
+    const hash = await client.writeContract(request)
     console.log("Hash: " + hash)
   }
 
